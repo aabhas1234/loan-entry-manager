@@ -15,13 +15,14 @@ const Addnewloanentry =() => {
     const handler5=(e)=>{setsanctionamount(e.target.value)};
     const handler6=(e)=>{setregion(e.target.value)};
     const handler7=(e)=>{setcurrentdpd(e.target.value)};
+    const root=import.meta.env.VITE_root_url;
     const handler8=async()=>{
         if(loanno===0 || loantype==="Enter Loan type" || borrowername==="Enter borrower Name" || borroweraddress=="Enter Borrower Address" || sanctionamount==0 || region=="Enter region" || currentdpd==0 )
         {
             alert("Please Enter all the values");
             return;
         }
-        const res= await fetch(`http://localhost:5000/api/createloanentry`,{
+        const res= await fetch(`${root}/api/createloanentry`,{
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'

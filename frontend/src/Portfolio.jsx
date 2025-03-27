@@ -17,9 +17,10 @@ const portfolio = () => {
     const [isregion, setisregion]= useState(false);
     const[isname, setisname]=useState(false);
     const[name, setname]=useState('');
+    const root=import.meta.env.VITE_root_url;
     const fetchloanentries = async () => {
 
-        const result = await fetch(`http://localhost:5000/api/getloanentries?loantype=${loantype}&region=${region}&name=${name}`, {
+        const result = await fetch(`${root}/api/getloanentries?loantype=${loantype}&region=${region}&name=${name}`, {
             method: 'GET'
         })
         const res = await result.json();
@@ -35,7 +36,9 @@ const portfolio = () => {
     }
     const sortify = () => {
         console.log("arr", arr);
-        let keys = Object.keys(arr[0]);
+        let keys=[];
+        if(arr.length>0)
+         keys = Object.keys(arr[0]);
         let newarray = [];
         for (let i = 0; i < arr.length; i++) {
             for (let j = 0; j < keys.length; j++) {
@@ -91,9 +94,9 @@ const portfolio = () => {
         console.log(tar);
         let map = new Map();
         arr.forEach((ele) => {
-            let a = map.get(ele[tar]) || [];
+            let a = map.get(ele[tar].toLowerCase()) || [];
             a.push(...Object.values(ele));
-            map.set(ele[tar], a);
+            map.set(ele[tar].toLowerCase(), a);
         });
         let newarr = [];
         for (let value of map.values()) {
@@ -111,6 +114,8 @@ const portfolio = () => {
         setfinal1([]);
         setisregion(false);
         setisname(false);
+        setregion('');
+        setname('');
     }
     const handler7=(e)=>{
         setname(e.target.value);
@@ -120,7 +125,7 @@ const portfolio = () => {
         fetchloanentries();
     }, [loantype,region,name])
     useEffect(() => {
-        if (arr.length > 0)
+        if (arr.length > 0 || flag)
             setfinal(sortify());
         if(flag1)
             handler2(bucket);
@@ -158,6 +163,7 @@ const portfolio = () => {
                             {
                                 array.map((ele) => { return <div className='text-center  p-1 '>{ele}</div> })
                             }
+                           
                         </div>)
                     })}
 

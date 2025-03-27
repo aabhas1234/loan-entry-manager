@@ -8,7 +8,7 @@ const signin = () => {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [name,setname]=useState("");
-
+    const root=import.meta.env.VITE_root_url;
     const handler1 = (e) => {
         setemail(e.target.value);
     };
@@ -21,7 +21,7 @@ const signin = () => {
 
     const handler3 = async () => {
         console.log("hey");
-        const res = await fetch(`http://localhost:5000/api/signin`, {
+        const res = await fetch(`${root}/api/signin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
